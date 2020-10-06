@@ -23,7 +23,29 @@ def binary_search(arr, target, start, end):
 # sorted in ascending order or in descending order
 # You can implement this function either recursively
 # or iteratively
-def agnostic_binary_search(arr, target):
-    # Your code here
-    pass
+def agnostic_binary_search(arr, target, start=0, end=None):
+    start = start
+    end = len(arr) - 1 if end is None else end
+    first_value = arr[0]
+    last_value = arr[-1]
 
+    middle = (start + end) // 2
+    guess = arr[middle]
+
+    while start <= end:
+        middle = (start + end) // 2
+        guess = arr[middle]
+
+        if guess is target:
+            return middle
+        elif first_value < last_value:
+            if guess > target:
+                return agnostic_binary_search(arr, target, start, middle - 1)
+            else:
+                return agnostic_binary_search(arr, target, middle + 1, end)
+        else:
+            if guess < target:
+                return agnostic_binary_search(arr, target, start, middle - 1)
+            else:
+                return agnostic_binary_search(arr, target, middle + 1, end)
+    return -1
